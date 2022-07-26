@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Wrapper>
-        <Hello name="React" color="red" isSpecial={true} />
+        <Hello name="React" color="red" isSpecial />
         <Hello color="pink" />
       </Wrapper>
     </>
