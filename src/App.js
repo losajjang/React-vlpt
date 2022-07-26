@@ -6,6 +6,7 @@ function App() {
   return (
     <>
       <Hello name="React" color="red" />
+      <Hello color="pink" />
     </>
   );
 }
