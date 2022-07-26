@@ -1,9 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-function Hello() {
-  return (
-    <div>안녕하세요</div>
-  )
+function Hello({ color, name }) {
+  return <div style={{ color: color }}>{name}</div>;
 }
 
-export default Hello
+export default Hello;
