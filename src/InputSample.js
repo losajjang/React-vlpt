@@ -7,7 +7,6 @@ function InputSample() {
   });
 
   const nameInput = useRef();
-  console.log(nameInput);
 
   const { name, nickname } = inputs;
 
