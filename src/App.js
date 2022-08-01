@@ -28,16 +28,19 @@ function App() {
       id: 1,
       username: 'psy',
       email: 'losajjang@naver.com',
+      active: true,
     },
     {
       id: 2,
       username: 'pjm',
       email: 'losajjang@gmail.com',
+      active: false,
     },
     {
       id: 3,
       username: 'ssh',
       email: 'taxphs@naver.com',
+      active: false,
     },
   ]);
 
@@ -61,7 +64,17 @@ function App() {
   };
 
   const onRemove = id => {
+    //user.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듦.
+    //user.id가 id인 것을 제거함.
     setUsers(users.filter(user => user.id !== id));
+  };
+
+  const onToggle = id => {
+    setUsers(
+      users.map(user =>
+        user.id === id ? {...user, active: !user.active} : user,
+      ),
+    );
   };
 
   console.log(nextId.current);
@@ -73,7 +86,7 @@ function App() {
         onChange={onChange}
         onCreate={onCreate}
       />
-      <UserList users={users} onRemove={onRemove} />
+      <UserList users={users} onRemove={onRemove} onToggle={onToggle} />
     </>
   );
 }
