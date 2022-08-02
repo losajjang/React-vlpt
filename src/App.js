@@ -77,7 +77,6 @@ function App() {
     );
   };
 
-  console.log(nextId.current);
   return (
     <>
       <CreateUser
