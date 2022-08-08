@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 
-function User({user, onRemove, onToggle}) {
-    
+const User = React.memo(function User({user, onRemove, onToggle}) {
   useEffect(() => {
     // console.log(user);
   });
@@ -21,7 +20,7 @@ function User({user, onRemove, onToggle}) {
       <button onClick={() => onRemove(user.id)}>삭제</button>
     </div>
   );
-}
+});
 
 function UserList({users, onRemove, onToggle}) {
   return (
@@ -29,15 +28,10 @@ function UserList({users, onRemove, onToggle}) {
     // map 안의 인자명과 동일한 인자명을 User 함수에 넘겨준다.
     <div>
       {users.map(user => (
-        <User
-          user={user}
-          key={user.id}
-          onRemove={onRemove}
-          onToggle={onToggle}
-        />
+        <User user={user} key={user.id} onRemove={onRemove} onToggle={onToggle} />
       ))}
     </div>
   );
 }
 
-export default UserList;
+export default React.memo(UserList);

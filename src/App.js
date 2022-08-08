@@ -20,16 +20,13 @@ function App() {
 
   const {username, email} = inputs;
 
-  const onChange = useCallback(
-    e => {
-      const {name, value} = e.target;
-      setInputs({
-        ...inputs,
-        [name]: value,
-      });
-    },
-    [inputs],
-  );
+  const onChange = useCallback(e => {
+    const {name, value} = e.target;
+    setInputs(inputs => ({
+      ...inputs,
+      [name]: value,
+    }));
+  }, []);
 
   const [users, setUsers] = useState([
     {
@@ -61,7 +58,7 @@ function App() {
       email,
     };
     // setUsers([...users, user]);
-    setUsers(users.concat(user)); //스프레드 문법과 같이 concat은 불변성을 지킨다.
+    setUsers(users => users.concat(user)); //스프레드 문법과 같이 concat은 불변성을 지킨다.
 
     setInputs({
       username: '',
@@ -69,29 +66,32 @@ function App() {
     });
 
     nextId.current += 1;
-  }, [email, username, users]);
+  }, [email, username]);
 
   //user.id가 파라미터로 일치하지 않는 원소만 추출해서 새로운 배열을 만듦.
   //user.id가 id인 것을 제거함.
-  const onRemove = useCallback(
-    id => {
-      setUsers(users.filter(user => user.id !== id));
-    },
-    [users],
-  );
+  const onRemove = useCallback(id => {
+    setUsers(users => users.filter(user => user.id !== id));
+  }, []);
 
-  const onToggle = useCallback(
-    id => {
-      setUsers(users.map(user => (user.id === id ? {...user, active: !user.active} : user)));
-    },
-    [users],
-  );
+  const onToggle = useCallback(id => {
+    setUsers(users =>
+      users.map(user =>
+        user.id === id ? {...user, active: !user.active} : user,
+      ),
+    );
+  }, []);
 
   const count = useMemo(() => countActiveUsers(users), [users]);
 
   return (
     <>
-      <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate} />
+      <CreateUser
+        username={username}
+        email={email}
+        onChange={onChange}
+        onCreate={onCreate}
+      />
       <UserList users={users} onRemove={onRemove} onToggle={onToggle} />
       <div>활성 사용자 수 : {count}</div>
     </>
