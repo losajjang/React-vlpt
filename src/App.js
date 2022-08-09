@@ -83,20 +83,33 @@ function App() {
     });
   }, []);
 
-  const onCreate = useCallback(
-    e => {
-      dispatch({
-        type: 'CREATE_USER',
-        user: {
-          id: nextId.current,
-          username,
-          email,
-        },
-      });
-      nextId.crrent += 1;
-    },
-    [username, email],
-  );
+  const onCreate = useCallback(() => {
+    dispatch({
+      type: 'CREATE_USER',
+      user: {
+        id: nextId.current,
+        username,
+        email,
+      },
+    });
+    nextId.crrent += 1;
+  }, [username, email]);
+
+  const onToggle = useCallback(id => {
+    dispatch({
+      type: 'TOGGLE_USER',
+      id,
+    });
+  }, []);
+
+  const onRemove = useCallback(id => {
+    dispatch({
+      type: 'REMOVE_USER',
+      id,
+    });
+  }, []);
+
+  const count = useMemo(() => countActiveUsers(users), [users]);
 
   return (
     <>
@@ -106,8 +119,8 @@ function App() {
         onChange={onChange}
         onCreate={onCreate}
       />
-      <UserList users={users} />
-      <div>활성 사용자 수 : 0</div>
+      <UserList users={users} onToggle={onToggle} onRemove={onRemove} />
+      <div>활성 사용자 수 : {count}</div>
     </>
   );
 }
